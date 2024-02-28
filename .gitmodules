@@ -1,0 +1,6 @@
+[submodule "GroundingDINO"]
+	path = GroundingDINO
+	url = https://github.com/IDEA-Research/GroundingDINO
+[submodule "MobileSAM"]
+	path = MobileSAM
+	url = https://github.com/piyushgit011/MobileSAM
