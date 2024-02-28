@@ -1,0 +1,7 @@
+*png
+*jpg
+*jpeg
+*ipynb
+__pycache__/*
+env/*
+weights/*pth
