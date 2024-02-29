@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 output_directory = "./recieved_files/"
 # print(large_lip_logic("images/1.png"))
-pod_id = "a3juid7agss9ns"
+pod_id_bkp = "a3juid7agss9ns"
 @app.route('/large_lip_mask', methods=['POST'])
 def large_lip():
     if 'file' not in request.files:
@@ -17,7 +17,7 @@ def large_lip():
 
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
-
+    pod_id = request.form.get('pod_id', pod_id_bkp)
     if file:
         filename = secure_filename(file.filename)
         file_extension = filename.rsplit('.', 1)[1].lower()
@@ -40,7 +40,7 @@ def medium_lip():
 
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
-
+    pod_id = request.form.get('pod_id', pod_id_bkp)
     if file:
         filename = secure_filename(file.filename)
         file_extension = filename.rsplit('.', 1)[1].lower()
@@ -62,7 +62,8 @@ def light_lip():
 
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
-
+    pod_id = request.form.get('pod_id', pod_id_bkp)
+    
     if file:
         filename = secure_filename(file.filename)
         file_extension = filename.rsplit('.', 1)[1].lower()
