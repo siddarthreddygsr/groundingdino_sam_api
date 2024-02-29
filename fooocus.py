@@ -5,7 +5,6 @@ import json
 import base64
 import time
 from PIL import Image as im
-import pdb
 
 def host_url(pod_id):
     return f"https://{pod_id}-8888.proxy.runpod.net"
@@ -27,7 +26,6 @@ def focus_endpoint(image_url,mask_url,pod_id):
                         # files=filesjson,
                         )
     result = response.json()
-    pdb.set_trace()
     base = result[0]['base64']
     return base
     # image_data = base64.b64decode(base)
