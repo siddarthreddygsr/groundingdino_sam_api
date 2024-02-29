@@ -67,7 +67,7 @@ def large_lip_logic(image_path,pod_id):
     return b64
     # return file_path
 
-def medium_lip_logic(image_path):
+def medium_lip_logic(image_path,pod_id):
     image = cv2.imread(image_path)
     detections = grounding_dino_model.predict_with_classes(
         image=image,
@@ -91,11 +91,11 @@ def medium_lip_logic(image_path):
 
     file_path = f"processed_image/{randomizer()}.png"
     cv2.imwrite(file_path,mask)
-    # mask_url = convert_to_url(file_path)
-    # image_url = convert_to_url(image_path)
-    # b64 = focus_endpoint(image_url,mask_url,pod_id)
-    # return b64
-    return file_path
+    mask_url = convert_to_url(file_path)
+    image_url = convert_to_url(image_path)
+    b64 = focus_endpoint(image_url,mask_url,pod_id)
+    return b64
+    # return file_path
 
 def segment(sam_predictor: SamPredictor, image: np.ndarray, xyxy: np.ndarray) -> np.ndarray:
     sam_predictor.set_image(image)

@@ -25,8 +25,11 @@ def focus_endpoint(image_url,mask_url,pod_id):
                         data=json.dumps(params),
                         # files=filesjson,
                         )
-    result = response.json()
-    base = result[0]['base64']
+    try:
+        result = response.json()
+        base = result[0]['base64']
+    except:
+        base = response
     return base
     # image_data = base64.b64decode(base)
     # filename = secure_filename(file.filename)

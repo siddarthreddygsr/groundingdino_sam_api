@@ -25,7 +25,7 @@ def large_lip():
         temp_path = os.path.join(output_directory, unique_filename)
         file.save(temp_path)
 
-        result_path = large_lip_logic(temp_path)
+        result_path = large_lip_logic(temp_path,pod_id)
         # b64 = large_lip_logic(temp_path,pod_id)
         # return jsonify({'base64_data': b64})
 
@@ -49,7 +49,7 @@ def medium_lip():
         file.save(temp_path)
 
         # result_path = medium_lip_logic(temp_path)
-        b64 = large_lip_logic(temp_path,pod_id)
+        b64 = medium_lip_logic(temp_path,pod_id)
         return jsonify({'base64_data': b64})
         # return send_file(result_path, as_attachment=True)
 
@@ -72,7 +72,7 @@ def light_lip():
 
         # result_path = light_lip_logic(temp_path)
 
-        b64 = large_lip_logic(temp_path,pod_id)
+        b64 = light_lip_logic(temp_path,pod_id)
         return jsonify({'base64_data': b64})
         # return send_file(result_path, as_attachment=True)
     
