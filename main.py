@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 output_directory = "./recieved_files/"
 # print(large_lip_logic("images/1.png"))
+pod_id = "a3juid7agss9ns"
 @app.route('/large_lip_mask', methods=['POST'])
 def large_lip():
     if 'file' not in request.files:
@@ -25,6 +26,8 @@ def large_lip():
         file.save(temp_path)
 
         result_path = large_lip_logic(temp_path)
+        # b64 = large_lip_logic(temp_path,pod_id)
+        # return jsonify({'base64_data': b64})
 
         return send_file(result_path, as_attachment=True)
 
@@ -45,9 +48,10 @@ def medium_lip():
         temp_path = os.path.join(output_directory, unique_filename)
         file.save(temp_path)
 
-        result_path = medium_lip_logic(temp_path)
-
-        return send_file(result_path, as_attachment=True)
+        # result_path = medium_lip_logic(temp_path)
+        b64 = large_lip_logic(temp_path,pod_id)
+        return jsonify({'base64_data': b64})
+        # return send_file(result_path, as_attachment=True)
 
 @app.route('/light_lip_mask', methods=['POST'])
 def light_lip():
@@ -66,9 +70,11 @@ def light_lip():
         temp_path = os.path.join(output_directory, unique_filename)
         file.save(temp_path)
 
-        result_path = light_lip_logic(temp_path)
+        # result_path = light_lip_logic(temp_path)
 
-        return send_file(result_path, as_attachment=True)
+        b64 = large_lip_logic(temp_path,pod_id)
+        return jsonify({'base64_data': b64})
+        # return send_file(result_path, as_attachment=True)
     
 if __name__ == '__main__':
     app.run(debug=True,port=8000,host= '0.0.0.0')

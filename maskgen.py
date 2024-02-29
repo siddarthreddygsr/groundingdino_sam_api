@@ -9,7 +9,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from generate_filename import randomizer
 from PIL import Image
-
+from np2b64 import convert_to_url
+from fooocus import focus_endpoint
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 GROUNDING_DINO_CHECKPOINT_PATH = "./weights/groundingdino_swint_ogc.pth"
@@ -32,7 +33,7 @@ def enhance_class_name(class_names: List[str]) -> List[str]:
         for class_name
         in class_names
     ]
-def large_lip_logic(image_path):
+def large_lip_logic(image_path,pod_id):
     image = cv2.imread(image_path)
 
     detections = grounding_dino_model.predict_with_classes(
@@ -60,7 +61,11 @@ def large_lip_logic(image_path):
         cv2.rectangle(mask, (x1, y1), (x2, y2), (255, 255, 255), thickness=cv2.FILLED)
     file_path = f"processed_image/{randomizer()}.png"
     cv2.imwrite(file_path,mask)
-    return file_path
+    mask_url = convert_to_url(file_path)
+    image_url = convert_to_url(image_path)
+    b64 = focus_endpoint(image_url,mask_url,pod_id)
+    return b64
+    # return file_path
 
 def medium_lip_logic(image_path):
     image = cv2.imread(image_path)
@@ -86,6 +91,10 @@ def medium_lip_logic(image_path):
 
     file_path = f"processed_image/{randomizer()}.png"
     cv2.imwrite(file_path,mask)
+    # mask_url = convert_to_url(file_path)
+    # image_url = convert_to_url(image_path)
+    # b64 = focus_endpoint(image_url,mask_url,pod_id)
+    # return b64
     return file_path
 
 def segment(sam_predictor: SamPredictor, image: np.ndarray, xyxy: np.ndarray) -> np.ndarray:
@@ -100,7 +109,7 @@ def segment(sam_predictor: SamPredictor, image: np.ndarray, xyxy: np.ndarray) ->
         result_masks.append(masks[index])
     return np.array(result_masks)
 
-def light_lip_logic(image_path):
+def light_lip_logic(image_path,pod_id):
     try:
         CLASSES = ['lip']
         BOX_TRESHOLD = 0.40
@@ -145,7 +154,11 @@ def light_lip_logic(image_path):
         mask_pil = Image.fromarray(detections.mask[0])
         file_path = f"processed_image/{randomizer()}.png"
         mask_pil.save(file_path)
-        return file_path
+        mask_url = convert_to_url(file_path)
+        image_url = convert_to_url(image_path)
+        b64 = focus_endpoint(image_url,mask_url,pod_id)
+        return b64
+        # return file_path
     except:
         return {"error" : "lips not detected"}
 
