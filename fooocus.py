@@ -19,6 +19,13 @@ def focus_endpoint(image_url,mask_url,pod_id):
             "async_process": False,
             "input_image" : image_url,
             "input_mask" : mask_url,
+            "image_prompts": [
+                {
+            "cn_img": image_url,
+            "cn_stop": 1,
+            "cn_weight": 1,
+                "cn_type": "ImagePrompt"
+                }],
             "image_prompts" : [],
             }
     response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-prompt",
