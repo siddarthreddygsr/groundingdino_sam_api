@@ -19,6 +19,7 @@ def focus_endpoint(image_url,mask_url,pod_id):
             "async_process": False,
             "input_image" : image_url,
             "input_mask" : mask_url,
+            "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
             "image_prompts": [
                 {
             "cn_img": image_url,
