@@ -52,11 +52,11 @@ def large_lip_logic(image_path,pod_id):
     annotated_frame = box_annotator.annotate(scene=image.copy(), detections=detections, labels=labels)
     sv.plot_image(annotated_frame, (8, 8))
     for x1, y1, x2, y2 in detections.xyxy:
+        x1 = x1 - 10
+        x2 = x2 + 10
+        y1 = y1 - 10
+        y2 = y2 + 10
         x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
-        x1 = x1 + 5
-        x2 = x2 + 5
-        y1 = y1 + 5
-        y2 = y2 + 5
         mask = np.zeros_like(image, dtype=np.uint8)
         cv2.rectangle(mask, (x1, y1), (x2, y2), (255, 255, 255), thickness=cv2.FILLED)
     file_path = f"processed_image/{randomizer()}.png"
