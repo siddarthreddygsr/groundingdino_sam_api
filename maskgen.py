@@ -33,6 +33,7 @@ def enhance_class_name(class_names: List[str]) -> List[str]:
         for class_name
         in class_names
     ]
+
 def large_lip_logic(image_path,pod_id):
     image = cv2.imread(image_path)
 
@@ -44,7 +45,6 @@ def large_lip_logic(image_path,pod_id):
     )
 
     box_annotator = sv.BoxAnnotator()
-    box_annotator = sv.BoxAnnotator()
     labels = [
         f"{CLASSES[class_id]} {confidence:0.2f}"
         for _, _, confidence, class_id, _
@@ -52,11 +52,11 @@ def large_lip_logic(image_path,pod_id):
     annotated_frame = box_annotator.annotate(scene=image.copy(), detections=detections, labels=labels)
     sv.plot_image(annotated_frame, (8, 8))
     for x1, y1, x2, y2 in detections.xyxy:
+        x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
         x1 = x1 + 5
         x2 = x2 + 5
         y1 = y1 + 5
         y2 = y2 + 5
-        x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
         mask = np.zeros_like(image, dtype=np.uint8)
         cv2.rectangle(mask, (x1, y1), (x2, y2), (255, 255, 255), thickness=cv2.FILLED)
     file_path = f"processed_image/{randomizer()}.png"
@@ -152,7 +152,8 @@ def light_lip_logic(image_path,pod_id):
 
 
         mask_pil = Image.fromarray(detections.mask[0])
-        file_path = f"processed_image/{randomizer()}.png"
+        file_path = f"{randomizer()}.png"
+        print(file_path)
         mask_pil.save(file_path)
         mask_url = convert_to_url(file_path)
         image_url = convert_to_url(image_path)

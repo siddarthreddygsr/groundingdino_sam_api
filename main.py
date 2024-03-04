@@ -25,11 +25,11 @@ def large_lip():
         temp_path = os.path.join(output_directory, unique_filename)
         file.save(temp_path)
 
-        result_path = large_lip_logic(temp_path,pod_id)
-        # b64 = large_lip_logic(temp_path,pod_id)
-        # return jsonify({'base64_data': b64})
+        # result_path = large_lip_logic(temp_path,pod_id)
+        b64 = large_lip_logic(temp_path,pod_id)
+        return jsonify({'base64_data': b64})
 
-        return send_file(result_path, as_attachment=True)
+        # return send_file(result_path, as_attachment=True)
 
 @app.route('/medium_lip_mask', methods=['POST'])
 def medium_lip():
@@ -78,4 +78,4 @@ def light_lip():
         # return send_file(result_path, as_attachment=True)
     
 if __name__ == '__main__':
-    app.run(debug=True,port=8000,host= '0.0.0.0')
+    app.run(debug=True,port=8181,host= '0.0.0.0')
