@@ -7,7 +7,7 @@ import time
 from PIL import Image as im
 
 def host_url(pod_id):
-    return f"https://{pod_id}-8628.proxy.runpod.net"
+    return f"https://{pod_id}-8888.proxy.runpod.net"
 
 def focus_endpoint(image_url,mask_url,pod_id):
 
@@ -37,7 +37,7 @@ def focus_endpoint(image_url,mask_url,pod_id):
         result = response.json()
         base = result[0]['base64']
     except:
-        base = response
+        base = response.text
     return base
     # image_data = base64.b64decode(base)
     # filename = secure_filename(file.filename)

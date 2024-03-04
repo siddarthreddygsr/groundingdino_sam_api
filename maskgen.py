@@ -151,9 +151,8 @@ def light_lip_logic(image_path,pod_id):
         sv.plot_image(annotated_image1, (8, 8))
 
 
-        mask_pil = Image.fromarray(detections.mask[0])
-        file_path = f"{randomizer()}.png"
-        print(file_path)
+        mask_pil = Image.fromarray(detections.mask[0].astype(np.uint8) * 255)
+        file_path = f"processed_image/{randomizer()}.png"
         mask_pil.save(file_path)
         mask_url = convert_to_url(file_path)
         image_url = convert_to_url(image_path)
