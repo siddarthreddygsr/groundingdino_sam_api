@@ -7,18 +7,26 @@ import time
 from PIL import Image as im
 
 def host_url(pod_id):
-    return f"https://{pod_id}-8888.proxy.runpod.net"
+    return f"https://{pod_id}-8628.proxy.runpod.net"
 
 def focus_endpoint(image_url,mask_url,pod_id):
 
     params={
-            "prompt": "perfect teeth, shiny teeth,veneer teeth, super white teeth, perfect shape of teeth",
-            "negative_prompt" : "imperfect teeth",
+            "prompt": "lips filler, plumper lips, large lips, beautiful perfect lips",
+            "negative_prompt" : "imperfect lips",
             "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
             "require_base64":True,
             "async_process": False,
             "input_image" : image_url,
             "input_mask" : mask_url,
+            "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
+            "image_prompts": [
+                {
+            "cn_img": image_url,
+            "cn_stop": 1,
+            "cn_weight": 1,
+                "cn_type": "ImagePrompt"
+                }],
             "image_prompts" : [],
             }
     response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-prompt",
